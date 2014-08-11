@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>First Ember Blog</title>
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css">
+</head>
+
+ <body>
+
+  <script type="text/x-handlebars">
+    <div class="navbar">
+      <div class="navbar-inner">
+        <a class="brand" href="#">My Blog</a>
+        <ul class="nav">
+          <li>{{#link-to 'posts'}}Posts{{/link-to}}</li>
+          <li>{{#link-to 'about'}}About{{/link-to}}</li>
+        </ul>
+      </div>
+    </div>
+    {{outlet}}
+  </script>
+
+  <script type="text/x-handlebars" id="posts">
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+          <table class='table'>
+            <thead>
+              <tr><th>Recent Posts</th></tr>
+            </thead>
+            {{#each}}
+            <tr><td>
+              {{#link-to 'post' this}}
+                {{title}} <small class='muted'>by {{author.name}}</small>
+              {{/link-to}}
+            </tr></td>
+            {{/each}}
+          </table>
+        </div>
+        <div class="span9">
+          {{outlet}}
+        </div>
+      </div>
+    </div>
+  </script>
+
+  <script type="text/x-handlebars" id="post">
+  {{#if isEditing}}
+    {{partial 'posts/edit'}}
+    <button {{action 'doneEditing'}}>Save</button>
+  {{else}}
+    <button {{action 'edit'}}>Edit</button>
+  {{/if}}
+
+  <h1>{{title}}</h1>
+  <h2>by {{author.name}} <small class='muted'>({{date}})</small></h2>
+
+  <hr>
+
+  <div class='intro'>
+    {{excerpt}}
+  </div>
+
+  <div class='below-the-fold'>
+    {{body}}
+  </div>
+  </script>
+
+  <script type="text/x-handlebars" id="posts/_edit">
+    <p>{{input type="text" value=title}}</p>
+    <p>{{input type="text" value=excerpt}}</p>
+    <p>{{textarea value=body}}</p>
+  </script>
+
+  <script type="text/x-handlebars" id="about">
+    <div class='about'>
+    <p>
+      My name is <a href="https://www.facebook.com/marcelo.menezes.921">Marcelo Menezes</a>.
+      I am testing a web application made with Ember framework, just practicing and trying to follow
+      screencast starting guide. When i'm done, you'll be able to read this message. =)
+    </p>
+    <p>
+      If you liked it, you either can try to make your own app, just by following the
+      <a href="http://emberjs.com/guides/">Ember.js guide</a>.
+    </p>
+    </div>
+  </script>
+
+  <script src="js/libs/jquery-1.10.2.js"></script>
+  <script src="js/libs/handlebars-1.1.2.js"></script>
+  <script src="js/libs/ember-1.6.1.js"></script>
+  <script scr="http://cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js"></script>
+  <script scr="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.1.0/moment.min.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>
